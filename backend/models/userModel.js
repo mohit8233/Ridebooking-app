@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        required: true,
         default: "user",
         enum: ["user", "driver", "admin"]
     },
@@ -28,11 +27,57 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    isApproved:{
-         type: Boolean,
+    isApproved: {
+        type: Boolean,
         default: false
+    },
+
+    licenseNumber: {
+        type: Number,
+        required: function () {
+            return this.role === "driver"
+        }
+    },
+    vehicleNumber: {
+        type: String,
+        required: function () {
+            return this.role === "driver"
+        }
+    },
+    vehicleType: {
+        type: String,
+        enum: ["cars", "auto", "bike"],
+        default: "cars",
+        required: function () {
+            return this.role === "driver"
+        }
+    },
+    isAvailable: {
+        type: Boolean,
+        required: function () {
+            return this.role === "driver"
+        }
+    },
+    currentLocation: {
+        type: String,
+        required: true
+
+    },
+
+    rating: {
+        type: Number,
+
+    },
+    totalRatings: {
+        type: Number
+    },
+    totalEarning: {
+        type: Number,
+        required: function () {
+            return this.role === "driver"
+        }
     }
 
-},{timestamps})
+}, { timestamps: true })
 
-export const User = mongoose.model("User",userSchema)
+export const User = mongoose.model("User", userSchema)
