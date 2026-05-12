@@ -106,3 +106,24 @@ export const verifyVehicle = async (req, res) => {
     return res.status(500).json({ status: false, message: error.message });
   }
 };
+
+
+export const getAvailableVehicles = async (req, res) => {
+  try {
+    const vehicles = await Vehicle.find({
+      isVerified: true
+    }).populate("driverId", "name email phone");
+
+    return res.status(200).json({
+      status: true,
+      message: "Available vehicles fetched",
+      data: vehicles
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message
+    });
+  }
+};

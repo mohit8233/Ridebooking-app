@@ -2,6 +2,7 @@ import express from "express";
 import {
   createVehicle,
   getAllVehicles,
+  getAvailableVehicles,
   myVehicles,
   verifyVehicle
 } from "../controllers/vehicleController.js";
@@ -15,5 +16,5 @@ router.post("/createVehicle", authMiddle, driverMiddle, createVehicle);
 router.get("/getAllVehicles", authMiddle, adminMiddle, getAllVehicles);
 router.get("/myVehicles", authMiddle, driverMiddle, myVehicles);
 router.patch("/verifyVehicle/:id", authMiddle, adminMiddle, verifyVehicle);
-
+router.get("/availableVehicles", authMiddle, getAvailableVehicles);
 export default router;
